@@ -41,3 +41,26 @@ This will automatically reset the databse and populate some applicants and schem
 ```
 python app.py
 ```
+
+## Usage
+
+### Authentication
+Register a New User:
+```
+curl -X POST http://localhost:8000/api/register \
+     -H "Content-Type: application/json" \
+     -d '{"username": "newuser", "password": "password123"}'
+```
+Login
+(copy the JWT)
+```
+curl -X POST http://localhost:8000/api/login \
+     -H "Content-Type: application/json" \
+     -d '{"username": "existinguser", "password": "password123"}'
+```
+
+Example - Get all applicants
+```
+curl -X GET http://localhost:8000/api/applicants/ \
+     -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
