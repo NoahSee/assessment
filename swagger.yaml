@@ -291,3 +291,68 @@ paths:
                   message:
                     type: string
                     example: "Invalid credentials"
+  /api/schemes/:
+    get:
+      summary: Get all schemes
+      operationId: getSchemes
+      responses:
+        '200':
+          description: A list of schemes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Scheme A"
+                    description:
+                      type: string
+                      example: "Description of Scheme A"
+                    criteria_jq:
+                      type: string
+                      example: ".age >= 18"
+  /api/schemes/eligible:
+    get:
+      summary: Get eligible schemes for an applicant
+      operationId: getEligibleSchemes
+      parameters:
+        - name: applicant
+          in: query
+          required: true
+          description: The ID of the applicant to check eligibility for
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of eligible schemes for the applicant
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Scheme A"
+                    description:
+                      type: string
+                      example: "Description of Scheme A"
+                    criteria_jq:
+                      type: string
+                      example: ".age >= 18"
+        '400':
+          description: Applicant ID is required
+        '404':
+          description: Applicant not found
+        '500':
+          description: Internal server error

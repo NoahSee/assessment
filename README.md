@@ -17,8 +17,8 @@ Before setting up the project, ensure you have the following installed:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/yourproject.git
-cd yourproject
+gh repo clone NoahSee/assessment
+cd assessment
 ```
 
 ### Set Up the Virtual Environment
@@ -36,6 +36,8 @@ brew install jq
 ```
 
 ### Run
+This will automatically reset the databse and populate some applicants and schemes:
+
 ```
 python app.py
 ```
