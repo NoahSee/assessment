@@ -36,7 +36,7 @@ brew install jq
 ```
 
 ### Run
-This will automatically reset the databse and populate some applicants and schemes:
+This will automatically reset the database and populate some applicants and schemes:
 
 ```
 python app.py
