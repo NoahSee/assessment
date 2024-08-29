@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from db import get_db_connection
+from flask_jwt_extended import jwt_required
 import json
 
 applicants_bp = Blueprint("applicants", __name__)

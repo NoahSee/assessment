@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from db import get_db_connection
 import subprocess
 import json
+from flask_jwt_extended import jwt_required
 
 schemes_bp = Blueprint("schemes", __name__)
 
