@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from db import get_db_connection
 import json
 
-applicants_bp = Blueprint('applicants', __name__)
+applicants_bp = Blueprint("applicants", __name__)
 
 
 @applicants_bp.route("/", methods=["GET"])
@@ -41,8 +41,7 @@ def add_applicant():
     conn.commit()
     return (
         jsonify(
-            {"id": new_applicant["id"],
-                "message": "Applicant added successfully!"}
+            {"id": new_applicant["id"], "message": "Applicant added successfully!"}
         ),
         201,
     )

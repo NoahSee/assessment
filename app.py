@@ -19,11 +19,10 @@ with app.app_context():
     init_db()
 
 # Register Blueprints
-
-app.register_blueprint(applicants_bp, url_prefix='/api/applicants')
-app.register_blueprint(schemes_bp, url_prefix='/api/schemes')
-app.register_blueprint(applications_bp, url_prefix='/api/applications')
-app.register_blueprint(auth_bp, url_prefix='/api/auth')
+app.register_blueprint(applicants_bp, url_prefix="/api/applicants")
+app.register_blueprint(schemes_bp, url_prefix="/api/schemes")
+app.register_blueprint(applications_bp, url_prefix="/api/applications")
+app.register_blueprint(auth_bp, url_prefix="/api/auth")
 
 if __name__ == "__main__":
     app.run(port=8000, debug=True)

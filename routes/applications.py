@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from db import get_db_connection
 from .schemes import evaluate_criteria
 
-applications_bp = Blueprint('applications', __name__)
+applications_bp = Blueprint("applications", __name__)
 
 
 @applications_bp.route("/", methods=["GET"])
@@ -39,10 +39,15 @@ def add_application():
     if not scheme:
         return jsonify({"message": "Scheme not found"}), 404
 
-    criteria_jq = scheme['criteria_jq']
+    criteria_jq = scheme["criteria_jq"]
 
     if not evaluate_criteria(applicant["household_json"], criteria_jq):
-        return jsonify({"message": "Applicant does not meet the criteria for this scheme"}), 400
+        return (
+            jsonify(
+                {"message": "Applicant does not meet the criteria for this scheme"}
+            ),
+            400,
+        )
 
     cursor.execute(
         "INSERT INTO applications (applicant_id, scheme_id) VALUES (?, ?)",
@@ -51,8 +56,7 @@ def add_application():
     conn.commit()
 
     return (
-        jsonify({"id": cursor.lastrowid,
-                "message": "Application added successfully!"}),
+        jsonify({"id": cursor.lastrowid, "message": "Application added successfully!"}),
         201,
     )
 
@@ -64,14 +68,21 @@ def update_application_outcome(application_id):
     new_outcome = data.get("outcome")
 
     if new_outcome not in ["Approved", "Denied"]:
-        return jsonify({"message": "Invalid outcome. Valid outcomes are 'Approved' or 'Denied'."}), 400
+        return (
+            jsonify(
+                {
+                    "message": "Invalid outcome. Valid outcomes are 'Approved' or 'Denied'."
+                }
+            ),
+            400,
+        )
 
     conn = get_db_connection()
     cursor = conn.cursor()
 
     cursor.execute(
         "UPDATE applications SET outcome = ? WHERE id = ?",
-        (new_outcome, application_id)
+        (new_outcome, application_id),
     )
 
     if cursor.rowcount == 0:
@@ -80,4 +91,7 @@ def update_application_outcome(application_id):
     conn.commit()
     conn.close()
 
-    return jsonify({"message": f"Application {application_id} updated to {new_outcome}."}), 200
+    return (
+        jsonify({"message": f"Application {application_id} updated to {new_outcome}."}),
+        200,
+    )

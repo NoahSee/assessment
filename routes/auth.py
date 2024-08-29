@@ -3,7 +3,7 @@ from flask_jwt_extended import create_access_token
 from flask_bcrypt import Bcrypt
 from db import get_db_connection
 
-auth_bp = Blueprint('auth', __name__)
+auth_bp = Blueprint("auth", __name__)
 bcrypt = Bcrypt()
 
 
@@ -39,13 +39,11 @@ def login():
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute(
-        "SELECT * FROM administrators WHERE username = ?", (username,))
+    cursor.execute("SELECT * FROM administrators WHERE username = ?", (username,))
     admin = cursor.fetchone()
 
     if admin and bcrypt.check_password_hash(admin["password"], password):
-        access_token = create_access_token(
-            identity={"username": admin["username"]})
+        access_token = create_access_token(identity={"username": admin["username"]})
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"message": "Invalid credentials"}), 401

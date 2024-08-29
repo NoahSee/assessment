@@ -3,7 +3,7 @@ from db import get_db_connection
 import subprocess
 import json
 
-schemes_bp = Blueprint('schemes', __name__)
+schemes_bp = Blueprint("schemes", __name__)
 
 
 @schemes_bp.route("/", methods=["GET"])
@@ -27,7 +27,8 @@ def get_eligible_schemes():
     cursor = conn.cursor()
 
     cursor.execute(
-        "SELECT household_json FROM applicants WHERE id = ?", (applicant_id,))
+        "SELECT household_json FROM applicants WHERE id = ?", (applicant_id,)
+    )
     applicant = cursor.fetchone()
     if not applicant:
         return jsonify({"message": "Applicant not found"}), 404
@@ -55,14 +56,11 @@ def evaluate_criteria(applicant, criteria_jq):
 
     try:
         result = subprocess.run(
-            ['jq', '-c', criteria_jq],
-            input=json_data,
-            text=True,
-            capture_output=True
+            ["jq", "-c", criteria_jq], input=json_data, text=True, capture_output=True
         )
-        return result.returncode == 0 and result.stdout.startswith('true')
+        return result.returncode == 0 and result.stdout.startswith("true")
     except FileNotFoundError:
-        raise RuntimeError('JQ command not found. Install JQ to proceed.')
+        raise RuntimeError("JQ command not found. Install JQ to proceed.")
     except Exception as e:
-        print(f'Error evaluating criteria: {e}')
+        print(f"Error evaluating criteria: {e}")
         return False
